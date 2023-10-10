@@ -22,6 +22,8 @@ public class EmployeeManagerUI {
     private JTextField networkYr;
     private JTextField cableYr;
     private JButton createButton;
+    private JTable certTable;
+    private JComboBox certSelector;
 
     private final EmployeeService employeeService = new EmployeeService();
 
@@ -35,6 +37,10 @@ public class EmployeeManagerUI {
         // On load actions
         //Setting Employee Table
         setEmployeeTable();
+
+        certSelector.addItem("PC");
+        certSelector.addItem("Network");
+        certSelector.addItem("Cable");
 
         // Create button action listener
         createButton.addActionListener(new ActionListener() {
@@ -69,10 +75,20 @@ public class EmployeeManagerUI {
                     JOptionPane.showMessageDialog(null, ex.getMessage(),
                             "Error Creating Employee", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
 
-
-
-
+        // This method will update the cert table with the cert selected
+        certSelector.addActionListener(new ActionListener() {
+            /**
+             * Invoked when an action occurs.
+             *
+             * @param e the event to be processed
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedCert = (String) certSelector.getSelectedItem();
+                setCertTable(selectedCert);
             }
         });
     }
@@ -86,13 +102,27 @@ public class EmployeeManagerUI {
         try {
             // create TableModel for results of DEFAULT_QUERY
             tableModel = new ResultSetTableModel(DB_URL, DEFAULT_QUERY);
-
             employeeTable.setModel(tableModel);
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error Setting Employee Table", JOptionPane.ERROR_MESSAGE);
             tableModel.disconnectFromDatabase();
-            System.exit(1);
+        }
+    }
+
+    public void setCertTable(String certName){
+        try { // Find all employees with selected cert
+            String CERT_QUERY = "SELECT employee.firstName, Employee.LastName FROM Certs cert, Employees employee WHERE cert.certName = '" + certName + "'" +
+                    "AND cert.employeeId = employee.employeeId";
+
+            // create TableModel for results of DEFAULT_QUERY
+            tableModel = new ResultSetTableModel(DB_URL, CERT_QUERY);
+
+            certTable.setModel(tableModel);
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error Setting Cert Table", JOptionPane.ERROR_MESSAGE);
+            tableModel.disconnectFromDatabase();
         }
     }
 }

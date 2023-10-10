@@ -46,3 +46,5 @@ INSERT INTO employees (firstName, lastName, pcHours, networkHours, cableHours, p
     ('Michael','Morgano', 0, 0, 0, 0, 0, 0);
 
 SELECT * FROM employees;
+
+SELECT employee.firstName, Employee.LastName FROM Certs cert, Employees employee WHERE cert.CERTNAME = 'PC' AND cert.EMPLOYEEID = employee.EMPLOYEEID;
