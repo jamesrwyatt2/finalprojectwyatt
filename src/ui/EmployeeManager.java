@@ -42,7 +42,7 @@ public class EmployeeManager {
              */
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Excute Insert Statement
+                // Execute Insert Statement
                 try {
                     employeeService.createEmployee(firstName.getText(), lastName.getText(),
                             Integer.parseInt(pcHr.getText()),  Integer.parseInt(networkHr.getText()),  Integer.parseInt(cableHr.getText()),
