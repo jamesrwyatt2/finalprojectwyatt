@@ -33,6 +33,12 @@ public class EmployeeManagerUI {
     private JList trainerList;
     private JButton submitButton;
     private JList employeeListForTraining;
+    private JTextField textField1;
+    private JTextField textField2;
+    private JTextField textField3;
+    private JTextField textField4;
+    private JTextField textField5;
+    private JButton submitButton1;
 
     private final EmployeeService employeeService = new EmployeeService();
 
