@@ -74,7 +74,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="42995" class="javax.swing.JTable" binding="table1" default-binding="true">
+                  <component id="42995" class="javax.swing.JTable" binding="employeeTable">
                     <constraints/>
                     <properties/>
                   </component>

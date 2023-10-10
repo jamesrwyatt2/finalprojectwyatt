@@ -15,7 +15,7 @@ public class EmployeeManagerApplication {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.setSize(700,500);
+        frame.setSize(900,500);
     }
 
     // Create the database if it doesn't exist

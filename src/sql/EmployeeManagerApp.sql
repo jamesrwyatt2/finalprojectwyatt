@@ -36,3 +36,5 @@ INSERT INTO employees (firstName, lastName, pcHours, networkHours, cableHours, p
     ('Sammy','Fields', 0, 0, 0, 0, 0, 0),
     ('Dan','Quirk', 0, 0, 0, 0, 0, 0),
     ('Michael','Morgano', 0, 0, 0, 0, 0, 0);
+
+SELECT * FROM employees;
