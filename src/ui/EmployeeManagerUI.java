@@ -39,6 +39,9 @@ public class EmployeeManagerUI {
     private JTextField textField4;
     private JTextField textField5;
     private JButton submitButton1;
+    private JList pcJobList;
+    private JList networkJobList;
+    private JList cableJobList;
 
     private final EmployeeService employeeService = new EmployeeService();
 
@@ -58,7 +61,7 @@ public class EmployeeManagerUI {
         setTrainerList();
         setAllEmployeeList();
         setCertSelector();
-
+        setJobTable();
 
         // Create button action listener
         createButton.addActionListener(new ActionListener() {
@@ -181,6 +184,7 @@ public class EmployeeManagerUI {
         setCertTable("PC");
         setTrainerList();
         setAllEmployeeList();
+        setJobTable();
     }
 
     // On load this method will set the table model for the employee table
@@ -211,6 +215,18 @@ public class EmployeeManagerUI {
             tableModel.disconnectFromDatabase();
         }
     }
+    // Set job tables
+    public void setJobTable(){
+        try {
+            pcJobList.setModel(certService.getCertList("PC"));
+            networkJobList.setModel(certService.getCertList("Network"));
+            cableJobList.setModel(certService.getCertList("Cable"));
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error Setting PC Job List", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
     // On load this method will set the list model for the trainer list
     public void setTrainerList(){
         try {
