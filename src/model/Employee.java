@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Employee Class for the Employee Application
+ * This class is used to create Employee objects for list model
+ * @Author James Wyatt
+ */
 public class Employee {
 
     private int employeeId;
@@ -12,6 +17,7 @@ public class Employee {
     private int networkYears;
     private int cableYears;
 
+    // An all argument constructor
     public Employee(int employeeId, String firstName, String lastName, int pcHours, int networkHours, int cableHours, int pcYears, int networkYears, int cableYears) {
         this.employeeId = employeeId;
         this.firstName = firstName;
@@ -23,8 +29,14 @@ public class Employee {
         this.networkYears = networkYears;
         this.cableYears = cableYears;
     }
-
+    // A name only constructor
     public Employee(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    // An id and name constructor
+    public Employee(int employeeId, String firstName, String lastName) {
+        this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
     }

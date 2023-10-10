@@ -30,6 +30,7 @@ public class EmployeeManagerUI {
     private JTextField textField3;
     private JList trainerList;
     private JButton submitButton;
+    private JList employeeListForTraining;
 
     private final EmployeeService employeeService = new EmployeeService();
 
@@ -47,7 +48,7 @@ public class EmployeeManagerUI {
         setEmployeeTable();
         setCertTable("PC");
         setTrainerList();
-
+        setAllEmployeeList();
         setCertSelector();
 
 
@@ -75,11 +76,11 @@ public class EmployeeManagerUI {
                     pcYr.setText("");
                     networkYr.setText("");
                     cableYr.setText("");
-                    // Update employee table
-                    setEmployeeTable();
+                    // Run cert and trainer processes
                     certService.certQualifyChecker(createEmployeeId);
                     trainerService.trainerQualifyChecker(createEmployeeId);
-
+                    // Update employee table
+                    updateAllTablesAndList();
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -103,15 +104,16 @@ public class EmployeeManagerUI {
             }
         });
     }
-
+    // This method will return the root panel for the UI
     public JPanel getRootPanel() {
         return rootPanel;
     }
-
-    public void updateAllTables() {
+    // This method will update all tables and lists after an insert
+    private void updateAllTablesAndList() {
         setEmployeeTable();
         setCertTable("PC");
         setTrainerList();
+        setAllEmployeeList();
     }
 
     // On load this method will set the table model for the employee table
@@ -126,7 +128,7 @@ public class EmployeeManagerUI {
             tableModel.disconnectFromDatabase();
         }
     }
-
+    // On load this method will set the table model for the cert table
     public void setCertTable(String certName){
         try { // Find all employees with selected cert
             String CERT_QUERY = "SELECT employee.firstName, Employee.LastName FROM Certs cert, Employees employee WHERE cert.certName = '" + certName + "'" +
@@ -142,7 +144,7 @@ public class EmployeeManagerUI {
             tableModel.disconnectFromDatabase();
         }
     }
-
+    // On load this method will set the list model for the trainer list
     public void setTrainerList(){
         try {
             trainerList.setModel(trainerService.getAllTrainer());
@@ -150,7 +152,15 @@ public class EmployeeManagerUI {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error Setting Trainer Table", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    // On load this method will set the list model for the employee list
+    private void setAllEmployeeList() {
+        try {
+            employeeListForTraining.setModel(employeeService.getAllEmployeesList());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error Setting Employee List", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    // On load this method will set the cert list selector options
     private void setCertSelector() {
         certSelector.addItem("PC");
         certSelector.addItem("Network");

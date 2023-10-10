@@ -7,6 +7,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Training Service class for the Employee Application
+ * This class contains sql statements for the application
+ * @Author James Wyatt
+ */
+
 public class TrainerService extends MainService{
 
     private final EmployeeService employeeService = new EmployeeService();

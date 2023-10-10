@@ -315,14 +315,19 @@
                 </constraints>
                 <properties/>
                 <border type="none"/>
-                <children/>
+                <children>
+                  <component id="a512b" class="javax.swing.JList" binding="employeeListForTraining">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
               </scrollpane>
               <component id="e1361" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Employees Trained:"/>
+                  <text value="Employees Trained (hold CLT for mult):"/>
                 </properties>
               </component>
               <component id="526d9" class="javax.swing.JButton" binding="submitButton" default-binding="true">

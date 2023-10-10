@@ -1,11 +1,17 @@
 package model;
 
+/**
+ * Cert Class for the Employee Application
+ * This class is used to create Cert objects for list model
+ * @Author James Wyatt
+ */
 public class Cert {
 
         private int certId;
         private int employeeId;
         private String certName;
 
+        // An all argument constructor
         public Cert(int certId, int employeeId, String certName) {
             this.certId = certId;
             this.employeeId = employeeId;

@@ -7,10 +7,21 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * CertService Class for the Employee Application
+ * This class contains the main method and sql statements for the application
+ * @Author James Wyatt
+ */
 public class CertService extends MainService{
-
+    // Utilize the EmployeeService to get employee data
     private final EmployeeService employeeService = new EmployeeService();
 
+    /**
+     * This method is used to get all certs from the database and return them in a List
+     * @param employeeId
+     * @return A List of cert employees
+     * @throws SQLException
+     */
     public List<Cert> getCertsByEmployeeId(int employeeId) throws SQLException {
         String SELECT_QUERY =
                 "SELECT * " +
@@ -23,22 +34,8 @@ public class CertService extends MainService{
         return mapResultSetToCertList(resultSet);
     }
 
-    private List<Cert> mapResultSetToCertList(ResultSet resultSet) throws SQLException {
-        List<Cert> certs = new ArrayList<>();
-        while(resultSet.next()) {
-            int certId = Integer.parseInt(resultSet.getString("certId"));
-            int employeeId = Integer.parseInt(resultSet.getString("employeeId"));
-            String certName = resultSet.getString("certName");
-            Cert cert = new Cert(certId, employeeId, certName);
-            certs.add(cert);
-        }
-        return certs;
-    }
-
-
-
+    // This method runs the cert processes
     public void certQualifyChecker(int employeeId) throws SQLException{
-
         List<Employee> employees;
 
         String SELECT_QUERY =
@@ -54,9 +51,24 @@ public class CertService extends MainService{
         for(Employee employee : employees) {
             createCertIfQualified(employee);
         }
-
     }
 
+    // Private helper methods //
+
+    // Map the result set to a list of certs
+    private List<Cert> mapResultSetToCertList(ResultSet resultSet) throws SQLException {
+        List<Cert> certs = new ArrayList<>();
+        while(resultSet.next()) {
+            int certId = Integer.parseInt(resultSet.getString("certId"));
+            int employeeId = Integer.parseInt(resultSet.getString("employeeId"));
+            String certName = resultSet.getString("certName");
+            Cert cert = new Cert(certId, employeeId, certName);
+            certs.add(cert);
+        }
+        return certs;
+    }
+
+    // If they can be certified, create the cert
     private void createCertIfQualified(Employee employee) throws SQLException {
         if(employee.getPcHours() >= 1000) {
             createCert(employee.getEmployeeId(), "PC");
@@ -69,6 +81,7 @@ public class CertService extends MainService{
         }
     }
 
+    // Check if the cert already exists, if not create it
     private void createCert(int employeeId, String certName) throws SQLException{
 
         getCertsByEmployeeId(employeeId).forEach(cert -> {

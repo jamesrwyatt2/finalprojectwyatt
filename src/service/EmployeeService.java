@@ -2,9 +2,16 @@ package service;
 
 import model.Employee;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * EmployeeService Class for the Employee Application
+ * This class contain employee sql statements and mapping for the application
+ * @Author James Wyatt
+ */
 
 public class EmployeeService extends MainService {
 
@@ -44,6 +51,32 @@ public class EmployeeService extends MainService {
             employees.add(employee);
         }
         return employees;
+    }
+
+    public DefaultListModel getAllEmployeesList() throws SQLException {
+
+        List<Employee> employees = new ArrayList<>();
+
+        Connection connection = DriverManager.getConnection(DB_URL);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT employee.employeeId, employee.firstName, employee.lastName FROM Employees employee");
+        // Loop through the result set and add each author to the list
+        while (resultSet.next()) {
+            int employeeId = resultSet.getInt("employeeId");
+            String firstName = resultSet.getString("firstName");
+            String lastName = resultSet.getString("lastName");
+            // Create a new author object and add it to the list
+            Employee employee = new Employee(employeeId, firstName, lastName);
+            employees.add(employee);
+        }
+
+        DefaultListModel<String> trainerListModel = new DefaultListModel<>();
+        // Loop through the list of authors and add them to the list model as single String
+        for (Employee employee : employees) {
+            trainerListModel.addElement(employee.getLastName() + ", " + employee.getFirstName());
+        }
+
+        return trainerListModel;
     }
 
 }

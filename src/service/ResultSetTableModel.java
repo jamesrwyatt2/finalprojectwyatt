@@ -6,6 +6,12 @@ package service;
 import javax.swing.table.AbstractTableModel;
 import java.sql.*;
 
+/**
+ * ResultSetTableModel Class for the Employee Application
+ * From text book How to Program Java: Late Objects Version
+ * @ Deitel, Deitel
+ */
+
 // ResultSet rows and columns are counted from 1 and JTable
 // rows and columns are counted from 0. When processing
 // ResultSet rows or columns for use in a JTable, it is
