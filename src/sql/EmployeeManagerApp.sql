@@ -39,11 +39,28 @@ CREATE TABLE jobs (
 
 INSERT INTO employees (firstName, lastName, pcHours, networkHours, cableHours, pcYears, networkYears, cableYears)
     VALUES
-    ('James','Wyatt', 0, 0, 0, 0, 0, 0),
-    ('Don','Deitel', 0, 0, 0, 0, 0, 0),
-    ('Sammy','Fields', 0, 0, 0, 0, 0, 0),
-    ('Dan','Quirk', 0, 0, 0, 0, 0, 0),
-    ('Michael','Morgano', 0, 0, 0, 0, 0, 0);
+    ('James','Wyatt', 0, 0, 0, 1, 1, 5),
+    ('Don','Deitel', 25, 25, 25, 1, 1, 1),
+    ('Sammy','Fields', 1445, 800, 200, 1, 1, 1),
+    ('Dan','Quirk', 1350, 800, 3400, 1, 2, 1),
+    ('Michael','Morgano', 1200, 2300, 1500, 6, 5, 8);
+
+INSERT INTO CERTS (certName, employeeID)
+    VALUES
+    ('PC', 3),
+    ('PC', 4),
+    ('Cable', 4),
+    ('PC', 5),
+    ('Network', 5),
+    ('Cable', 5)
+;
+
+INSERT INTO TRAINERS (employeeID)
+    VALUES
+    (4),
+    (5)
+;
+
 
 SELECT * FROM employees;
 
