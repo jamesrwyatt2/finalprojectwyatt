@@ -24,6 +24,11 @@ public class Employee {
         this.cableYears = cableYears;
     }
 
+    public Employee(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public int getEmployeeId() {
         return employeeId;
     }

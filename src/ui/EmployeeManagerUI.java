@@ -28,7 +28,7 @@ public class EmployeeManagerUI {
     private JTextField textField1;
     private JTextField textField2;
     private JTextField textField3;
-    private JList list1;
+    private JList trainerList;
     private JButton submitButton;
 
     private final EmployeeService employeeService = new EmployeeService();
@@ -46,10 +46,10 @@ public class EmployeeManagerUI {
         //Setting Employee Table
         setEmployeeTable();
         setCertTable("PC");
+        setTrainerList();
 
-        certSelector.addItem("PC");
-        certSelector.addItem("Network");
-        certSelector.addItem("Cable");
+        setCertSelector();
+
 
         // Create button action listener
         createButton.addActionListener(new ActionListener() {
@@ -108,6 +108,12 @@ public class EmployeeManagerUI {
         return rootPanel;
     }
 
+    public void updateAllTables() {
+        setEmployeeTable();
+        setCertTable("PC");
+        setTrainerList();
+    }
+
     // On load this method will set the table model for the employee table
     public void setEmployeeTable(){
         try {
@@ -135,5 +141,19 @@ public class EmployeeManagerUI {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error Setting Cert Table", JOptionPane.ERROR_MESSAGE);
             tableModel.disconnectFromDatabase();
         }
+    }
+
+    public void setTrainerList(){
+        try {
+            trainerList.setModel(trainerService.getAllTrainer());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error Setting Trainer Table", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void setCertSelector() {
+        certSelector.addItem("PC");
+        certSelector.addItem("Network");
+        certSelector.addItem("Cable");
     }
 }
