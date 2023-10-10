@@ -3,7 +3,7 @@ import ui.EmployeeManager;
 import javax.swing.*;
 import java.sql.*;
 
-public class Main {
+public class EmployeeManagerApplication {
 
     public static void main(String[] args) {
         createDb();
