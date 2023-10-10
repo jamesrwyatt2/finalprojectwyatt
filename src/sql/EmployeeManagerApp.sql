@@ -33,7 +33,10 @@ CREATE TABLE jobs (
                     jobID INT NOT NULL GENERATED ALWAYS AS IDENTITY,
                     title varchar (100) NOT NULL,
                     description varchar (100) NOT NULL,
-                    requirements varchar (100) NOT NULL,
+                    pcRequirements INT NOT NULL,
+                    networkRequirements INT NOT NULL,
+                    cableRequirements INT NOT NULL,
+                    employeeIDs varchar (100) NOT NULL,
                     PRIMARY KEY (jobID)
 );
 
