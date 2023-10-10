@@ -112,4 +112,19 @@ public class Employee {
     public void setCableYears(int cableYears) {
         this.cableYears = cableYears;
     }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeId=" + employeeId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", pcHours=" + pcHours +
+                ", networkHours=" + networkHours +
+                ", cableHours=" + cableHours +
+                ", pcYears=" + pcYears +
+                ", networkYears=" + networkYears +
+                ", cableYears=" + cableYears +
+                '}';
+    }
 }

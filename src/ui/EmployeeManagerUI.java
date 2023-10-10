@@ -1,5 +1,6 @@
 package ui;
 
+import model.Employee;
 import service.CertService;
 import service.EmployeeService;
 import service.ResultSetTableModel;
@@ -9,6 +10,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.List;
 
 public class EmployeeManagerUI {
     private JTabbedPane tabbedPane1;
@@ -25,9 +27,9 @@ public class EmployeeManagerUI {
     private JButton createButton;
     private JTable certTable;
     private JComboBox certSelector;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField pcHoursUpdate;
+    private JTextField networkHoursUpdate;
+    private JTextField cableHoursUpdate;
     private JList trainerList;
     private JButton submitButton;
     private JList employeeListForTraining;
@@ -101,6 +103,65 @@ public class EmployeeManagerUI {
             public void actionPerformed(ActionEvent e) {
                 String selectedCert = (String) certSelector.getSelectedItem();
                 setCertTable(selectedCert);
+            }
+        });
+
+        // This method will update the training hours for given employee
+        submitButton.addActionListener(new ActionListener() {
+            /**
+             * Invoked when an action occurs.
+             *
+             * @param e the event to be processed
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                trainerList.getSelectedValue();
+                List<String> employeesSelected = (List<String>) employeeListForTraining.getSelectedValuesList().stream().toList();
+
+                try {
+                    // Validate that a trainer and at least one employee is selected
+                    if(trainerList.getSelectedValue() == null || employeesSelected.size() == 0) {
+                        throw new Exception("Please select a trainer and at least one employee");
+                    }
+                    // Loop through each selected employee and update hours
+                    for (String employee : employeesSelected) {
+                        // Get employeeId
+                        String[] employeeId = employee.split(", ");
+                        // Get employee
+                        Employee employeeUpdate = employeeService.getEmployeeById(Integer.parseInt(employeeId[0]));
+                        // Check and update hours
+                        if(Integer.parseInt(pcHoursUpdate.getText()) > 0) {
+                            employeeUpdate.setPcHours(employeeUpdate.getPcHours() + Integer.parseInt(pcHoursUpdate.getText()));
+                        }
+                        if (Integer.parseInt(networkHoursUpdate.getText()) > 0) {
+                            employeeUpdate.setNetworkHours(employeeUpdate.getNetworkHours() + Integer.parseInt(networkHoursUpdate.getText()));
+                        }
+                        if (Integer.parseInt(cableHoursUpdate.getText()) > 0) {
+                            employeeUpdate.setCableHours(employeeUpdate.getCableHours() + Integer.parseInt(cableHoursUpdate.getText()));
+                        }
+                        // Make Update call
+                        employeeService.updateEmployee(employeeUpdate);
+                        // Run cert and trainer processes for updated employee
+                        certService.certQualifyChecker(Integer.parseInt(employeeId[0]));
+                        trainerService.trainerQualifyChecker(Integer.parseInt(employeeId[0]));
+                    }
+                    // Clear text fields
+                    pcHoursUpdate.setText("0");
+                    networkHoursUpdate.setText("0");
+                    cableHoursUpdate.setText("0");
+
+                    // Update employee tables
+                    updateAllTablesAndList();
+
+                } catch (SQLException exception) { // SQL exception handling
+                    exception.printStackTrace();
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "Error Updating Employees", JOptionPane.ERROR_MESSAGE);
+                } catch (Exception exception) { // All other exception handling
+                    exception.printStackTrace();
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "Error Updating Employees", JOptionPane.ERROR_MESSAGE);
+                }
+
             }
         });
     }

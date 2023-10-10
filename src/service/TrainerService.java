@@ -62,6 +62,11 @@ public class TrainerService extends MainService{
         return trainerListModel;
     }
 
+    public void updateEmployeeWithTraining() {
+
+
+    }
+
 
     // Private Helper Methods //
     private void createTrainerIfQualified(Employee employee) throws SQLException {

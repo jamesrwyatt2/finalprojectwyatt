@@ -15,6 +15,31 @@ import java.util.List;
 
 public class EmployeeService extends MainService {
 
+    public Employee getEmployeeById(int employeeId) throws SQLException {
+        String FIND_EMPLOYEE_BY_ID_QUERY =
+                "SELECT * " +
+                        "FROM employees " +
+                        "WHERE employeeId = " + employeeId;
+        Connection connection = DriverManager.getConnection(DB_URL);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(FIND_EMPLOYEE_BY_ID_QUERY);
+        if(resultSet.next()) {
+            employeeId = Integer.parseInt(resultSet.getString("employeeId"));
+            String firstName = resultSet.getString("firstName");
+            String lastName = resultSet.getString("lastName");
+            int pcHours = Integer.parseInt(resultSet.getString("pcHours"));
+            int networkHours = Integer.parseInt(resultSet.getString("networkHours"));
+            int cableHours = Integer.parseInt(resultSet.getString("cableHours"));
+            int pcYears = Integer.parseInt(resultSet.getString("pcYears"));
+            int networkYears = Integer.parseInt(resultSet.getString("networkYears"));
+            int cableYears = Integer.parseInt(resultSet.getString("cableYears"));
+            Employee employee = new Employee(employeeId, firstName, lastName, pcHours, networkHours, cableHours, pcYears, networkYears, cableYears);
+            return employee;
+        } else {
+            return null;
+        }
+    }
+
     public int createEmployee( String firstName, String lastName,
                                 int pcHours, int networkHours, int cableHours,
                                 int pcYears, int networkYears, int cableYears) throws SQLException {
@@ -33,6 +58,19 @@ public class EmployeeService extends MainService {
         generatedKeys.next();
         employeeId = generatedKeys.getLong(1);
         return employeeId.intValue();
+    }
+
+    public void updateEmployee(Employee employee) throws SQLException {
+        String UPDATE_QUERY =
+                "UPDATE employees " +
+                        "SET firstName = '" + employee.getFirstName() + "', lastName = '" + employee.getLastName() +
+                        "', pcHours = " + employee.getPcHours() + ", networkHours = " + employee.getNetworkHours() + ", cableHours = " + employee.getCableHours() +
+                        ", pcYears = " + employee.getPcYears() + ", networkYears = " + employee.getNetworkYears() + ", cableYears = " + employee.getCableYears() +
+                        " WHERE employeeId = " + employee.getEmployeeId();
+
+        Connection connection = DriverManager.getConnection(DB_URL);
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(UPDATE_QUERY);
     }
 
     public List<Employee> mapResultSetToEmployeeList(ResultSet resultSet) throws SQLException {
@@ -73,7 +111,7 @@ public class EmployeeService extends MainService {
         DefaultListModel<String> trainerListModel = new DefaultListModel<>();
         // Loop through the list of authors and add them to the list model as single String
         for (Employee employee : employees) {
-            trainerListModel.addElement(employee.getLastName() + ", " + employee.getFirstName());
+            trainerListModel.addElement(employee.getEmployeeId() + ", " + employee.getLastName() + ", " + employee.getFirstName());
         }
 
         return trainerListModel;
