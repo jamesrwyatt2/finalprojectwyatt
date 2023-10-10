@@ -1,4 +1,4 @@
-import ui.EmployeeManager;
+import ui.EmployeeManagerUI;
 
 import javax.swing.*;
 import java.sql.*;
@@ -7,7 +7,7 @@ public class EmployeeManagerApplication {
 
     public static void main(String[] args) {
         createDb();
-        EmployeeManager employeeManager = new EmployeeManager();
+        EmployeeManagerUI employeeManager = new EmployeeManagerUI();
         JPanel root = employeeManager.getRootPanel();
         JFrame frame = new JFrame("Employee Certification and Job Management System");
         frame.setContentPane(root);
@@ -24,7 +24,7 @@ public class EmployeeManagerApplication {
         final String DB_URL = "jdbc:derby://localhost:1527/employees;create=true";
 
         try {
-            Connection connection = DriverManager.getConnection(DB_URL);
+            DriverManager.getConnection(DB_URL);
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }

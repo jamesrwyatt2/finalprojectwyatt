@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-public class EmployeeManager {
+public class EmployeeManagerUI {
     private JTabbedPane tabbedPane1;
     private JPanel rootPanel;
     private JTable employeeTable;
@@ -28,7 +28,7 @@ public class EmployeeManager {
     private static final String DEFAULT_QUERY = "SELECT * FROM employees";
     private ResultSetTableModel tableModel;
 
-    public EmployeeManager() {
+    public EmployeeManagerUI() {
         // On load actions
         //Setting Employee Table
         setEmployeeTable();
