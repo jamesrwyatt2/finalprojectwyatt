@@ -3,6 +3,7 @@ package ui;
 import service.CertService;
 import service.EmployeeService;
 import service.ResultSetTableModel;
+import service.TrainerService;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -31,6 +32,8 @@ public class EmployeeManagerUI {
     private JButton submitButton;
 
     private final EmployeeService employeeService = new EmployeeService();
+
+    private final TrainerService trainerService = new TrainerService();
 
     private final CertService certService = new CertService();
 
@@ -75,6 +78,8 @@ public class EmployeeManagerUI {
                     // Update employee table
                     setEmployeeTable();
                     certService.certQualifyChecker(createEmployeeId);
+                    trainerService.trainerQualifyChecker(createEmployeeId);
+
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
