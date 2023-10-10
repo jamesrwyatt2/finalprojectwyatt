@@ -5,6 +5,7 @@ import java.sql.*;
 
 public class EmployeeManagerApplication {
 
+    // Main method to run the application
     public static void main(String[] args) {
         createDb();
         EmployeeManagerUI employeeManager = new EmployeeManagerUI();

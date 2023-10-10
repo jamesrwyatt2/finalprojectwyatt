@@ -44,6 +44,8 @@ public class EmployeeManagerUI {
 
     private final TrainerService trainerService = new TrainerService();
 
+    private final TrainingService trainingService = new TrainingService();
+
     private final CertService certService = new CertService();
 
     private final JobService jobService = new JobService();
@@ -149,7 +151,8 @@ public class EmployeeManagerUI {
                             employeeUpdate.setCableHours(employeeUpdate.getCableHours() + Integer.parseInt(cableHoursUpdate.getText()));
                         }
                         // Make Update call
-                        employeeService.updateEmployee(employeeUpdate);
+                        trainingService.updateEmployeeWithTraining(employeeUpdate);
+
                         // Run cert and trainer processes for updated employee
                         certService.certQualifyChecker(Integer.parseInt(employeeId[0]));
                         trainerService.trainerQualifyChecker(Integer.parseInt(employeeId[0]));

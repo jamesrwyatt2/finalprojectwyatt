@@ -60,19 +60,6 @@ public class EmployeeService extends MainService {
         return employeeId.intValue();
     }
 
-    public void updateEmployee(Employee employee) throws SQLException {
-        String UPDATE_QUERY =
-                "UPDATE employees " +
-                        "SET firstName = '" + employee.getFirstName() + "', lastName = '" + employee.getLastName() +
-                        "', pcHours = " + employee.getPcHours() + ", networkHours = " + employee.getNetworkHours() + ", cableHours = " + employee.getCableHours() +
-                        ", pcYears = " + employee.getPcYears() + ", networkYears = " + employee.getNetworkYears() + ", cableYears = " + employee.getCableYears() +
-                        " WHERE employeeId = " + employee.getEmployeeId();
-
-        Connection connection = DriverManager.getConnection(DB_URL);
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(UPDATE_QUERY);
-    }
-
     public List<Employee> mapResultSetToEmployeeList(ResultSet resultSet) throws SQLException {
         List<Employee> employees = new ArrayList<>();
         while(resultSet.next()) {
