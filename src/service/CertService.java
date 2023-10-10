@@ -59,20 +59,21 @@ public class CertService extends MainService{
 
         Connection connection = DriverManager.getConnection(DB_URL);
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT employee.firstName, employee.lastName FROM Employees employee, Certs cert WHERE employee.employeeId = cert.employeeId AND cert.certName = '" + certName + "'");
+        ResultSet resultSet = statement.executeQuery("SELECT employee.employeeId, employee.firstName, employee.lastName FROM Employees employee, Certs cert WHERE employee.employeeId = cert.employeeId AND cert.certName = '" + certName + "'");
         // Loop through the result set and add each author to the list
         while (resultSet.next()) {
+            int employeeId = Integer.parseInt(resultSet.getString("employeeId"));
             String firstName = resultSet.getString("firstName");
             String lastName = resultSet.getString("lastName");
             // Create a new author object and add it to the list
-            Employee employee = new Employee(firstName, lastName);
+            Employee employee = new Employee(employeeId, firstName, lastName);
             employees.add(employee);
         }
 
         DefaultListModel<String> certListModel = new DefaultListModel<>();
         // Loop through the list of authors and add them to the list model as single String
         for (Employee employee : employees) {
-            certListModel.addElement(employee.getLastName() + ", " + employee.getFirstName());
+            certListModel.addElement(employee.getEmployeeId() + ", " + employee.getLastName() + ", " + employee.getFirstName());
         }
 
         return certListModel;

@@ -1,10 +1,7 @@
 package ui;
 
 import model.Employee;
-import service.CertService;
-import service.EmployeeService;
-import service.ResultSetTableModel;
-import service.TrainerService;
+import service.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -33,11 +30,11 @@ public class EmployeeManagerUI {
     private JList trainerList;
     private JButton submitButton;
     private JList employeeListForTraining;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JTextField textField5;
+    private JTextField jobTitle;
+    private JTextField pcJobNumber;
+    private JTextField networkJobNumber;
+    private JTextField cableJobNumber;
+    private JTextField jobDescription;
     private JButton submitButton1;
     private JList pcJobList;
     private JList networkJobList;
@@ -48,6 +45,8 @@ public class EmployeeManagerUI {
     private final TrainerService trainerService = new TrainerService();
 
     private final CertService certService = new CertService();
+
+    private final JobService jobService = new JobService();
 
     private static final String DB_URL = "jdbc:derby://localhost:1527/employees";
     private static final String DEFAULT_QUERY = "SELECT * FROM employees";
@@ -171,6 +170,57 @@ public class EmployeeManagerUI {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "Error Updating Employees", JOptionPane.ERROR_MESSAGE);
                 }
 
+            }
+        });
+
+        // This method is to add a job to the database
+        submitButton1.addActionListener(new ActionListener() {
+            /**
+             * Invoked when an action occurs.
+             *
+             * @param e the event to be processed
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                List<String> pcEmployeeSelected = (List<String>) pcJobList.getSelectedValuesList().stream().toList();
+                List<String> networkEmployeeSelected = (List<String>) networkJobList.getSelectedValuesList().stream().toList();
+                List<String> cableEmployeeSelected = (List<String>) cableJobList.getSelectedValuesList().stream().toList();
+
+                try {
+                    //Validate fields
+                    if(jobTitle.getText().equals("") || pcJobNumber.getText().equals("") ) {
+                        throw new Exception("Please fill out all fields");
+                    }
+                    if(pcEmployeeSelected.size() == 0 && networkEmployeeSelected.size() == 0 && cableEmployeeSelected.size() == 0) {
+                        throw new Exception("Please select at least one employee");
+                    }
+                    // create list of EmployeeIds
+                    String employeeIds = pcEmployeeSelected.stream().map(s -> s.split(", ")[0]).reduce("", (s, s2) -> s + s2 + ",");
+                    employeeIds += networkEmployeeSelected.stream().map(s -> s.split(", ")[0]).reduce("", (s, s2) -> s + s2 + ",");
+                    employeeIds += cableEmployeeSelected.stream().map(s -> s.split(", ")[0]).reduce("", (s, s2) -> s + s2 + ",");
+
+                    System.out.println("Employees selected: "+employeeIds);
+
+                    jobService.insertJob(jobTitle.getText(), jobDescription.getText(),
+                            Integer.parseInt(pcJobNumber.getText()), Integer.parseInt(networkJobNumber.getText()), Integer.parseInt(cableJobNumber.getText()),
+                            employeeIds);
+
+                    //clear fields
+                    jobTitle.setText("");
+                    jobDescription.setText("");
+                    pcJobNumber.setText("0");
+                    networkJobNumber.setText("0");
+                    cableJobNumber.setText("0");
+
+
+                } catch (SQLException exception) { // SQL exception handling
+                    exception.printStackTrace();
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "Error Updating Employees", JOptionPane.ERROR_MESSAGE);
+                 }catch (Exception exception) { // All other exception handling
+                    exception.printStackTrace();
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "Error Updating Employees", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
