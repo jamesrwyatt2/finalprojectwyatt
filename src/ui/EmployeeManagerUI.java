@@ -1,5 +1,6 @@
 package ui;
 
+import service.CertService;
 import service.EmployeeService;
 import service.ResultSetTableModel;
 
@@ -24,6 +25,8 @@ public class EmployeeManagerUI {
 
     private final EmployeeService employeeService = new EmployeeService();
 
+    private final CertService certService = new CertService();
+
     private static final String DB_URL = "jdbc:derby://localhost:1527/employees";
     private static final String DEFAULT_QUERY = "SELECT * FROM employees";
     private ResultSetTableModel tableModel;
@@ -44,26 +47,32 @@ public class EmployeeManagerUI {
             public void actionPerformed(ActionEvent e) {
                 // Execute Insert Statement
                 try {
-                    employeeService.createEmployee(firstName.getText(), lastName.getText(),
+                    int createEmployeeId = employeeService.createEmployee(firstName.getText(), lastName.getText(),
                             Integer.parseInt(pcHr.getText()),  Integer.parseInt(networkHr.getText()),  Integer.parseInt(cableHr.getText()),
                             Integer.parseInt(pcYr.getText()),  Integer.parseInt(networkYr.getText()),  Integer.parseInt(cableYr.getText())
                     );
+                    // Clear text fields
+                    firstName.setText("");
+                    lastName.setText("");
+                    pcHr.setText("");
+                    networkHr.setText("");
+                    cableHr.setText("");
+                    pcYr.setText("");
+                    networkYr.setText("");
+                    cableYr.setText("");
+                    // Update employee table
+                    setEmployeeTable();
+                    certService.certQualifyChecker(createEmployeeId);
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, ex.getMessage(),
                             "Error Creating Employee", JOptionPane.ERROR_MESSAGE);
                 }
-                // Update employee table
-                setEmployeeTable();
-                // Clear text fields
-                firstName.setText("");
-                lastName.setText("");
-                pcHr.setText("");
-                networkHr.setText("");
-                cableHr.setText("");
-                pcYr.setText("");
-                networkYr.setText("");
-                cableYr.setText("");
+
+
+
+
             }
         });
     }

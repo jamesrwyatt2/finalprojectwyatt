@@ -1,4 +1,5 @@
 DROP TABLE employees;
+DROP TABLE certs;
 DROP TABLE trainers;
 DROP TABLE jobs;
 
@@ -19,6 +20,13 @@ CREATE TABLE trainers (
                         trainerID INT NOT NULL GENERATED ALWAYS AS IDENTITY,
                         employeeID INT NOT NULL,
                         FOREIGN KEY (employeeID) REFERENCES employees (employeeID)
+);
+
+CREATE TABLE certs (
+                    certID INT NOT NULL GENERATED ALWAYS AS IDENTITY,
+                    certName varchar (100) NOT NULL,
+                    employeeID INT NOT NULL,
+                    FOREIGN KEY (employeeID) REFERENCES employees (employeeID)
 );
 
 CREATE TABLE jobs (
