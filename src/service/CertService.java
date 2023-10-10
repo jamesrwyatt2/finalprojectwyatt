@@ -53,7 +53,7 @@ public class CertService extends MainService{
             createCertIfQualified(employee);
         }
     }
-
+    // Return a list of certs in a DefaultListModel for JList
     public DefaultListModel getCertList(String certName) throws SQLException{
         List<Employee> employees = new ArrayList<>();
 

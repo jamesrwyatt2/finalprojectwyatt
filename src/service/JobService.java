@@ -7,6 +7,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * JobService Class for the Employee Application
+ * This class contain job sql statements
+ * @Author James Wyatt
+ */
 public class JobService extends MainService {
 
     public void insertJob(String title, String description, int pcRequirements, int networkRequirements, int cableRequirements, String EmployeeIds) throws SQLException {

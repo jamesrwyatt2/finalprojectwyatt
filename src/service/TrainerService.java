@@ -17,6 +17,7 @@ public class TrainerService extends MainService{
 
     private final EmployeeService employeeService = new EmployeeService();
 
+    // Check if the employee is qualified to be a trainer
     public void trainerQualifyChecker(int employeeId) throws SQLException {
         List<Employee> employees;
 
@@ -62,12 +63,6 @@ public class TrainerService extends MainService{
         return trainerListModel;
     }
 
-    public void updateEmployeeWithTraining() {
-
-
-    }
-
-
     // Private Helper Methods //
     private void createTrainerIfQualified(Employee employee) throws SQLException {
         if(employee.getPcHours() >= 1000 && employee.getPcYears() >= 2) {
@@ -81,6 +76,7 @@ public class TrainerService extends MainService{
         }
     }
 
+    // If other checks meet, create trainer
     private void createTrainer(int employeeId, String certName) throws SQLException {
 
         String FIND_QUERY =

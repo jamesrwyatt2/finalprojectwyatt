@@ -15,6 +15,7 @@ import java.util.List;
 
 public class EmployeeService extends MainService {
 
+    // This method gets employee by id
     public Employee getEmployeeById(int employeeId) throws SQLException {
         String FIND_EMPLOYEE_BY_ID_QUERY =
                 "SELECT * " +
@@ -40,6 +41,7 @@ public class EmployeeService extends MainService {
         }
     }
 
+    // This method is to create employee
     public int createEmployee( String firstName, String lastName,
                                 int pcHours, int networkHours, int cableHours,
                                 int pcYears, int networkYears, int cableYears) throws SQLException {
@@ -60,6 +62,7 @@ public class EmployeeService extends MainService {
         return employeeId.intValue();
     }
 
+    // Mapper for employee
     public List<Employee> mapResultSetToEmployeeList(ResultSet resultSet) throws SQLException {
         List<Employee> employees = new ArrayList<>();
         while(resultSet.next()) {
@@ -78,6 +81,7 @@ public class EmployeeService extends MainService {
         return employees;
     }
 
+    // Returns all employees in a DefaultListModel for JList
     public DefaultListModel getAllEmployeesList() throws SQLException {
 
         List<Employee> employees = new ArrayList<>();

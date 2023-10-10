@@ -7,8 +7,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Training Service class for the Employee Application
+ * This class contains sql statements for the application
+ * @Author James Wyatt
+ */
 public class TrainingService extends MainService {
 
+    // This method is used to update an employee with training
     public void updateEmployeeWithTraining(Employee employee) throws SQLException {
         String UPDATE_QUERY =
                 "UPDATE employees " +
